@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flask Boggle</title>
+</head>
+<body>
+    <h1>Boggle</h1>
+
+    <div class="score"></div>
+    <div class="msg"></div>
+
+    <div>
+        <form id="guessForm" method="POST">
+            <input type="text" name="word" id="word" placeholder="make a guess">
+            <button>Submit</button>
+        </form>
+    </div>
+    
+    <table border="1px solid">
+        {% for row in board%}
+        <tr>
+            {% for l in row %}
+            <th>{{ l }}</th>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </table>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="/static/boggle.js"></script>
+    <script>
+        let game = new BoggleBoard("boggle", 60);
+    </script>
+</body>
+</html>

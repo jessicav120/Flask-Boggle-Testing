@@ -1,0 +1,22 @@
+{% extends "index.html" %}
+{%block content%}
+
+<div>
+    <form id="guessForm" name="guess">
+        <input type="text" placeholder="make a guess">
+        <button>Submit</button>
+    </form>
+</div>
+
+<table border="1px solid">
+    {% for row in board%}
+    <tr>
+        {% for l in row %}
+        <th>{{ l }}</th>
+        {% endfor %}
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}
+
