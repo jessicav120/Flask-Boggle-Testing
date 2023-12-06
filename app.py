@@ -1,5 +1,5 @@
-from boggle import Boggle
 from flask import Flask, request, render_template, session, jsonify
+from boggle import Boggle
 from flask_debugtoolbar import DebugToolbarExtension
 
 app = Flask(__name__)
@@ -8,15 +8,17 @@ toolbar = DebugToolbarExtension(app)
 
 boggle_game = Boggle()
 
-@app.route('/')
+@app.route('/', )
 def make_board():
     '''Initialize the game'''
     board = boggle_game.make_board()
     session['board'] = board
     
-    return render_template('index.html', board=board)
+    highscore = session['highscore']
+    
+    return render_template('index.html', board=board, highscore=highscore)
 
-@app.route('/word-check')
+@app.route("/word-check") #API endpoint
 def word_check():
     '''Check if submitted word is valid'''
     word = request.args['word']
@@ -25,5 +27,17 @@ def word_check():
     res = boggle_game.check_valid_word(board, word)
     #json response to return to the client
     return jsonify({'result': res})
+
+@app.route("/score-game", methods=["POST"])
+def score_game():
+    '''score the game and record the amount of plays'''
+    score = request.json["score"]
+    nplays = session.get("nplays", 0)
+    highscore = session.get("highscore", 0)
+    
+    session['nplays'] = nplays + 1
+    session['highscore'] = max(highscore, score)
+    
+    return jsonify(recordBreak=score > highscore)
     
     
