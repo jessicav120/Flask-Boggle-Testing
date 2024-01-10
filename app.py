@@ -13,10 +13,10 @@ def make_board():
     '''Initialize the game'''
     board = boggle_game.make_board()
     session['board'] = board
+    highscore = session.get("highscore", 0)
+    nplays = session.get("nplays", 0)
     
-    highscore = session['highscore']
-    
-    return render_template('index.html', board=board, highscore=highscore)
+    return render_template('index.html', board=board, highscore=highscore, nplays=nplays)
 
 @app.route("/word-check") #API endpoint
 def word_check():
